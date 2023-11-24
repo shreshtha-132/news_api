@@ -121,7 +121,7 @@ class _TopHeadlinesState extends State<TopHeadlines> {
     "za",
   ];
 
-  String selectedCountryCode = 'AE';
+  String selectedCountryCode = 'ae';
 
   var response;
   late Uri url;
@@ -157,6 +157,7 @@ class _TopHeadlinesState extends State<TopHeadlines> {
   void initState() {
     // this enables that when the app loads it shows the tabs for the initiallly
     // selected country i.e. uae.
+    super.initState();
     getData();
   }
 
@@ -207,7 +208,7 @@ class _TopHeadlinesState extends State<TopHeadlines> {
                   return buildTab(index); // TODO: BUILD TABS
                 },
               ),
-            ) // TODO:tabs for selected categories
+            ), // TODO:tabs for selected categories
           ],
         ),
       ),
@@ -215,15 +216,16 @@ class _TopHeadlinesState extends State<TopHeadlines> {
   }
 
   Widget buildButton(String text, int index) {
+    // to build horizontal country options
     return Container(
       margin: EdgeInsets.all(4.0),
       child: ElevatedButton(
-        onPressed: () {
-          // Add your button press logic here
+        onPressed: () async {
           setState(() {
             selectedCountryCode = countryCodes[index];
           });
-          getData();
+          // print("country " + selectedCountryCode);
+          await getData();
 
           // refresh the vertical tabs according to the new country selected
         },
@@ -233,39 +235,52 @@ class _TopHeadlinesState extends State<TopHeadlines> {
   }
 
   Widget buildTab(int index) {
-    String imageUrl = data['articles'][index]['urlToImage'].toString();
-    String title = data['articles'][index]['title'].toString();
-    return Card(
-      elevation: 4, // Add elevation for a subtle shadow
-      margin: EdgeInsets.symmetric(
-          vertical: 8.0, horizontal: 16.0), // Adjust margins
-      child: ListTile(
-        contentPadding: EdgeInsets.all(16.0), // Add padding for better spacing
-        leading: ClipRRect(
-          borderRadius:
-              BorderRadius.circular(8.0), // Add border radius to the image
-          child: Image.network(
-            imageUrl,
-            width: 100.0, // Adjust the width as needed
-            height: 180.0, // Adjust the height as needed
-            fit: BoxFit.cover,
+    if (index >= 0 && index < data['articles'].length) {
+      String imageUrl = data['articles'][index]['urlToImage']?.toString() ?? '';
+      String title = data['articles'][index]['title'].toString();
+
+      return Card(
+        elevation: 4,
+        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: ListTile(
+          contentPadding: EdgeInsets.all(16.0),
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: imageUrl.isNotEmpty
+                ? Image.network(
+                    imageUrl,
+                    width: 100.0,
+                    height: 180.0,
+                    fit: BoxFit.cover,
+                  )
+                : Container(
+                    color: Colors.grey, // Placeholder color or other content
+                    width: 100.0,
+                    height: 180.0,
+                    child: Center(
+                      child: Text('No Image'),
+                    ),
+                  ),
           ),
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16.0, // Adjust the font size
-              fontWeight: FontWeight.bold, // Bold text
+          title: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
+          onTap: () {
+            // Handle tap
+            print("Tapped on tab");
+            print(imageUrl);
+          },
         ),
-        onTap: () {
-          // Add your navigation logic here
-          print("Tapped on tab");
-        },
-      ),
-    );
+      );
+    } else {
+      return Container(); // Return an empty container or handle the case
+    }
   }
 }

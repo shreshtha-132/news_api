@@ -69,18 +69,26 @@ class _LandingState extends State<Landing> {
                   RoundedButton(
                     color: Colors.lightBlueAccent,
                     onPressed: () {
-                      Navigator.pushNamed(context, TopHeadlines.id);
+                      Navigator.pushNamed(
+                          context,
+                          TopHeadlines
+                              .id); // change this after adding user authentication from firebase
                     }, // TODO: implement login functionality
                     text: 'SignIn',
                   ),
                   RoundedButton(
                     color: Colors.lightBlueAccent,
-                    onPressed: () {}, // TODO: implement login functionality
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context,
+                          TopHeadlines
+                              .id); // change this after adding user authentication from firebase
+                    }, // TODO: implement login functionality
                     text: 'SignUp',
                   ),
                 ],
               ),
-            ) // singin and singup button
+            ) // signin and singup button
           ],
         ),
       ),
