@@ -4,6 +4,7 @@ import 'package:news_api/screens/topHeadlines.dart';
 
 import '../components/RoundedButton.dart';
 import '../constants.dart';
+import 'navigation.dart';
 
 class Landing extends StatefulWidget {
   static String id = 'Landing';
@@ -69,20 +70,14 @@ class _LandingState extends State<Landing> {
                   RoundedButton(
                     color: Colors.lightBlueAccent,
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context,
-                          TopHeadlines
-                              .id); // change this after adding user authentication from firebase
+                      Navigator.pushNamed(context, Navigation.id);
                     }, // TODO: implement login functionality
                     text: 'SignIn',
                   ),
                   RoundedButton(
                     color: Colors.lightBlueAccent,
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context,
-                          TopHeadlines
-                              .id); // change this after adding user authentication from firebase
+                      Navigator.pushNamed(context, Navigation.id);
                     }, // TODO: implement login functionality
                     text: 'SignUp',
                   ),

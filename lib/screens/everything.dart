@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Everything extends StatefulWidget {
   static String id = 'Everything';
@@ -8,6 +11,27 @@ class Everything extends StatefulWidget {
 }
 
 class _EverythingState extends State<Everything> {
+  var response;
+  late Uri url;
+  late Map<String, dynamic> data = {};
+
+  Future<void> getData() async {
+    try {
+      url = Uri.parse(" "); // TODO: add the url.
+      response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+      } else {
+        print('Error: ${response.statusCode}');
+        data = {};
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+      data = {};
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

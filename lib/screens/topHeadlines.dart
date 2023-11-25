@@ -143,13 +143,11 @@ class _TopHeadlinesState extends State<TopHeadlines> {
         }
       } else {
         print('Error: ${response.statusCode}');
-        data =
-            {}; // Set data to an empty map or handle it differently based on your requirements
+        data = {};
       }
     } catch (error) {
       print('Error fetching data: $error');
-      data =
-          {}; // Set data to an empty map or handle it differently based on your requirements
+      data = {};
     }
   }
 
